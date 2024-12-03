@@ -24,6 +24,7 @@ Code for fine-tuning ViT models on various classification datasets. Includes opt
 
 
 ## Usage
+The code is modified from forked resource. To use it for carbon data processing, use the main_v2.py file hereafter. The main.py is for other standard datasets.
 ### Training
 - To fine-tune a ViT-B/16 model on CIFAR-100 run:
 ```
@@ -31,9 +32,9 @@ python main.py fit --trainer.accelerator gpu --trainer.devices 1 --trainer.preci
 --trainer.max_steps 5000 --model.warmup_steps 500 --model.lr 0.01
 --trainer.val_check_interval 500 --data.batch_size 128 --data.dataset cifar100
 ```
-- [`config/`](configs/) contains example configuration files which can be run with:
+- [`config/`](configs/) contains example configuration files. To run the code for carbon dataset, it can be run with:
 ```
-python main.py fit --config path/to/config
+CUDA_VISIBLE_DEVICES=3 python main_v2.py fit --config configs/linear/custom.yaml
 ```
 - To get a list of all arguments run `python train.py --help`
 
@@ -43,9 +44,9 @@ To train on a custom dataset first organize the images into
 format. Then set `--data.dataset custom`, `--data.root path/to/custom/dataset` and `--data.num_classes <num-dataset-classes>`.
 
 ### Evaluate
-To evaluate a trained model on its test set, find the path of the saved config file for the checkpoint (eg. `output/cifar10/version_0/config.yaml`) and run:
+To evaluate a trained model on its test set, find the path of the saved config file for the checkpoint (eg. `output/chemical/version_0/config.yaml`) and run:
 ```
-python main.py test --ckpt_path path/to/checkpoint --config path/to/config
+python main_v2.py test --ckpt_path path/to/checkpoint --config path/to/config
 ```
 - __Note__: Make sure the `--trainer.precision` argument is set to the same level as used during training.
 
